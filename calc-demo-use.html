@@ -1,0 +1,111 @@
+﻿ <!DOCTYPE html>
+<html>
+    <head>
+ 
+	    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <title> calc </title>
+              <script type="text/javascript" src="http://cdn.sencha.io/ext-4.2.0-gpl/ext-all.js"></script>
+        <link rel="stylesheet" type="text/css" href="http://cdn.sencha.io/ext-4.2.0-gpl/resources/css/ext-all.css" />
+		 <!--   <script type="text/javascript" src="extjs/ext-all.js"></script>
+        <link rel="stylesheet" type="text/css" href="extjs/ext-theme-gray-all.css" />
+		--> 
+        <link rel="stylesheet" type="text/css" href="style/css/calc.css" />
+        <script type="text/javascript" src="calc.js"></script>
+  <script type="text/javascript">
+	Ext.onReady(function () {
+    Ext.widget('panel', {
+        itemId: 'code-editor',
+        title: 'ExtJS Code Editor',
+        width: 800,
+        height: 600,
+        layout: 'border',
+        renderTo: Ext.getBody(),
+        items: [
+            {
+                xtype: 'panel',
+                region: 'north',
+                layout: 'fit',
+                height: 200,
+                border: false,
+                bodyStyle: 'background-color: transparent;',
+                split: true,
+                items: [
+                    {
+                        itemId: 'code',
+                        cls: 'code-editor',
+                        xtype: 'textarea',
+                        value: "Ext.widget('panel', {\r\n" +
+                                "    title: 'Test panel', \r\n" +
+                                "    width: 200, \r\n" +
+                                "    height: 100, \r\n" +
+                                "    html: 'html content here', \r\n" +
+                                "    renderTo: 'codeoutput' \r\n" +
+                                "});\r\n"+
+								" Ext.widget('vdncalc', {\r\n" +
+                                "    title: 'Test Calculator',  x:50,y:50, \r\n" +
+                                "    renderTo: 'codeoutput' \r\n" +
+                                "});"
+								,
+                        enableKeyEvents: true,
+                        tabText: '    ',
+                        listeners: {
+                            keydown: function (f, e) {
+                                if (e.getKey() == e.TAB) {
+                                    e.stopEvent();
+                                    f.insertAtCursor(f.inputEl.dom, f.tabText);
+                                }
+                            }
+                        },
+                        insertAtCursor: function (el, ins) {
+                            if (el.setSelectionRange) {
+                                var withIns = el.value.substring(0, el.selectionStart) + ins;
+                                var pos = withIns.length;
+                                el.value = withIns + el.value.substring(el.selectionEnd, el.value.length);
+                                el.setSelectionRange(pos, pos);
+                            }
+                            else if (document.selection) {
+                                document.selection.createRange().text = ins;
+                            }
+                        }
+                    }
+                ],
+                buttons: [
+                    {
+                        text: 'Run Code',
+                        handler: function () {
+                            var code = this.up('panel').down('#code').getValue();
+ 
+                            this.up('#code-editor').clearOutput();
+ 
+                            
+                                new Function(code)();
+                             
+                        }
+                    },
+                    {
+                        text: 'Clear Output',
+                        handler: function () {
+                            this.up('#code-editor').clearOutput();
+                        }
+                    }
+                ]
+            },
+            {
+                id: 'codeoutput',
+                xtype: 'component',
+                autoScroll: true,
+                cls: 'code-output',
+                region: 'center'
+            }
+        ],
+        clearOutput: function () {
+            Ext.get('codeoutput').update('');
+        }
+    });
+});
+</script>
+    </head>
+    <body>
+        
+    </body>
+</html>
