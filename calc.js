@@ -27,10 +27,12 @@ Ext.define("Vdn.widget.Calc", {
     dragging: false,
     frame: true,
     title: 'Calc',
+    x: 0,
+    y: 0,
     configColorsEffect: {
         useopacity: true,
-        noActiveColor:  "#F0F8FF",
-        activeColor:  "#E0E7EE"
+        noActiveColor: "#F0F8FF",
+        activeColor: "#E0E7EE"
     },
     calcs: {
         memory: 0,
@@ -123,7 +125,7 @@ Ext.define("Vdn.widget.Calc", {
             text: "=",
             rowspan: 2
         }, {
-			itemId: "zeroCalc",
+            itemId: "zeroCalc",
             text: "0",
             colspan: 2
         }, {
@@ -154,8 +156,7 @@ Ext.define("Vdn.widget.Calc", {
                 default:
                     arr_buttons[i].cls = "calc-buttons";
             }
-			var btn=Ext.create('Ext.button.Button', arr_buttons[i]);
-			//btn.width = 33;
+            var btn = Ext.create('Ext.button.Button', arr_buttons[i]);
             p.items.push(btn);
             p.items[i].on('click', p.eventClickBtn, p, p.items[i]);
 
@@ -170,16 +171,18 @@ Ext.define("Vdn.widget.Calc", {
                 this.panel.onClickToPanel();
 
             }
-        }, p.layout = {
+        },
+        p.layout = {
             type: 'table',
             columns: 5
         },
         p.onClickToPanel = function () {
-            this.activated = true;
-
-            if ((!Ext.isIE || Ext.isIE9p) && this.configColorsEffect.useopacity) this.setBodyStyle('opacity', 1);
-            else this.setBodyStyle('background', this.configColorsEffect.activeColor);
-
+            if (!this.activated) {
+                this.activated = true;
+                this.dragging = false;
+                if ((!Ext.isIE || Ext.isIE9p) && this.configColorsEffect.useopacity) this.setBodyStyle('opacity', 1);
+                else this.setBodyStyle('background', this.configColorsEffect.activeColor);
+            }
         };
         p.onClickOutsidePanel = function (e) {
             var idPanel = this.getId();
@@ -194,17 +197,21 @@ Ext.define("Vdn.widget.Calc", {
             }
 
         };
-        if (!Ext.isIE9p && this.configColorsEffect.useopacity)
-			this.setBodyStyle('background', this.configColorsEffect.activeColor);
+        p.onClose = function () {
+            Ext.get(Ext.getBody()).un("mouseup", this.onClickOutsidePanel, this);
+            p.clearListeners();
+        }
+        if (!Ext.isIE9p && this.configColorsEffect.useopacity) this.setBodyStyle('background', this.configColorsEffect.activeColor);
         p.callParent(arguments);
     },
     afterRender: function () {
         panel = this;
         panel.callParent(arguments);
         panel.el.on('click', this.onClickToPanel, this);
-        Ext.get(Ext.getBody()).on("mouseup", panel.onClickOutsidePanel, this);
+        panel.on('close', this.onClose, this);
+        Ext.get(Ext.getBody()).on("mouseup", this.onClickOutsidePanel, this);
         panel.getComponent('eqCalc').height = panel.getComponent('eqCalc').getHeight(); // Cause css vertical-align not supported by button
-		 
+
     }
 
 });
