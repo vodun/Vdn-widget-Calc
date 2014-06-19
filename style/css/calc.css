@@ -1,69 +1,56 @@
-.code-editor textarea
-{
+.code-editor textarea {
     font-family: Consolas;
     background: none;
     background-color: white;
     padding-top: 5px;
 }
-.code-output
-{
+.code-output {
     padding: 5px;
     background-color: white;
     border: 1px solid #B5B8C8;
 }
-
-.default-calc { 
-  width: 205px;
-  height: 235px;
-  position:absolute !important;
-  z-index:1000; 
+.default-calc {
+    width: 205px;
+    height: 235px;
+    position:absolute !important;
+    z-index:1000;
 }
-.calc-txtfield
-{
-
-margin: 3px 3px 3px 3px;
-width: 188px;
-			}
-			
-.calc-txtfieldCls
-{
-
-text-align:right;
+.calc-txtfield {
+    margin: 3px 3px 3px 3px;
+	width:188px;
 }
-
-.calc-buttons
-{width : 33px;
-height : 22px;
-margin: 3px 3px 3px 3px;
-
+.calcmem {
+    margin: 3px 0px 3px 3px;
 }
-.calc-buttons span   
-{width : 27px; /* for ie8*/
-height : 16px; 
-
-}
-
-
-
-.calc-buttons-zero
-{width : 72px;
-height : 22px;
-margin: 3px 3px 3px 3px;
-
-}
-.calc-buttons-zero span
-{width : 64px;
-height : 16px; 
-
-}
-.calc-buttons-eq 
-{width : 33px;
-height : 50px; 
-margin: 3px 3px 3px 3px;
  
+.calc-txtfieldCls {
+    text-align:right;
 }
-.calc-buttons-eq  span
-{width : 27px ;
-height : 44px; 
- 
+.calc-buttons {
+    width : 33px;
+    height : 22px;
+    margin: 3px 3px 3px 3px;
+}
+.calc-buttons span {
+    width : 27px;
+    /* for ie8*/
+    height : 16px;
+}
+.calc-buttons-zero {
+    width : 72px;
+    height : 22px;
+    margin: 3px 3px 3px 3px;
+}
+.calc-buttons-zero span {
+    width : 64px;
+    height : 16px;
+}
+.calc-buttons-eq {
+    width : 33px;
+    height : 50px;
+    margin: 3px 3px 3px 3px;
+}
+.calc-buttons-eq span {
+    width : 27px;
+    height : 44px;
 }
